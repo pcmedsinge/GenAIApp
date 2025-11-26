@@ -1,0 +1,67 @@
+# ========================================
+# GenAI Learning Path - Dependencies
+# ========================================
+
+# Core LLM APIs
+openai>=1.12.0
+anthropic>=0.18.0
+
+# LLM Frameworks & Orchestration
+langchain>=0.1.9
+langchain-openai>=0.0.5
+langchain-anthropic>=0.1.4
+langchain-community>=0.0.20
+langgraph>=0.0.26
+crewai>=0.28.0
+
+# Vector Databases & Search
+chromadb>=0.4.22
+faiss-cpu>=1.7.4
+# pinecone-client>=3.0.0  # Uncomment if using Pinecone
+
+# Document Processing
+pypdf>=4.0.1
+python-docx>=1.1.0
+beautifulsoup4>=4.12.3
+markdown>=3.5.2
+
+# Fine-tuning & Training (Level 4)
+datasets>=2.16.1
+transformers>=4.37.2
+peft>=0.8.2
+bitsandbytes>=0.42.0
+accelerate>=0.26.1
+trl>=0.7.10  # Transformer Reinforcement Learning
+
+# Utilities
+python-dotenv>=1.0.1
+tiktoken>=0.6.0
+tenacity>=8.2.3  # Retry logic
+pydantic>=2.6.1  # Data validation
+
+# Data Processing
+numpy>=1.26.3
+pandas>=2.2.0
+
+# Web & API
+fastapi>=0.109.2
+uvicorn>=0.27.1
+httpx>=0.26.0
+requests>=2.31.0
+
+# UI (Optional but useful)
+streamlit>=1.31.0
+gradio>=4.19.0
+
+# Monitoring & Observability
+langsmith>=0.0.87
+# helicone  # Uncomment for advanced monitoring
+
+# Testing
+pytest>=8.0.0
+pytest-asyncio>=0.23.4
+
+# Development Tools
+jupyter>=1.0.0
+ipykernel>=6.29.0
+black>=24.1.1  # Code formatting

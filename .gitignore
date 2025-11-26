@@ -1,0 +1,47 @@
+# Environment
+.env
+venv/
+env/
+*.pyc
+__pycache__/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Data files (protect PHI!)
+*.csv
+*.xlsx
+*.db
+*.sqlite
+data/
+!data/.gitkeep
+
+# Model files
+*.bin
+*.safetensors
+models/
+checkpoints/
+
+# Logs
+*.log
+logs/
+
+# Vector DB storage
+chroma_db/
+vector_store/
+faiss_index/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Cache
+.cache/
+*.cache
