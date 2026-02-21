@@ -45,3 +45,6 @@ Thumbs.db
 # Cache
 .cache/
 *.cache
+
+# Generated output files
+output_*.txt

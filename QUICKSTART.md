@@ -1,4 +1,4 @@
-# 🚀 Quick Start Guide
+source venv/bin/activate# 🚀 Quick Start Guide
 
 ## Welcome to Your GenAI Learning Journey!
 
@@ -84,7 +84,7 @@ OPENAI_API_KEY=sk-proj-...your_actual_key_here...
 ANTHROPIC_API_KEY=sk-ant-...your_actual_key_here...
 ```
 
-Save and exit.
+Save and exit.ymptoms mentioned
 
 ---
 

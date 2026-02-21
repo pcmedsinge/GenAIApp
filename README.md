@@ -41,21 +41,21 @@
 ---
 
 ### Level 2: RAG Systems (Week 3-4)
-**Goal**: Build systems that augment LLMs with your data
+**Goal**: Build systems that augment LLMs with your own data
 
 **Projects**:
-- `01_simple_rag/`: Basic document Q&A
-- `02_vector_db/`: ChromaDB, Pinecone, or FAISS integration
-- `03_chunking_strategies/`: Optimize document splitting
-- `04_hybrid_search/`: Combine semantic + keyword search
-- `05_medical_rag/`: Healthcare knowledge base (medical guidelines, drug databases)
+- `01_simple_rag/`: RAG from scratch — no frameworks, just OpenAI API + cosine similarity
+- `02_vector_databases/`: ChromaDB — persistent storage, CRUD, metadata filtering
+- `03_document_processing/`: Chunking strategies — fixed, sentence, section-based with overlap
+- `04_advanced_retrieval/`: Multi-query, LLM re-ranking, citations, evaluation metrics
+- `05_medical_rag/`: Capstone — complete medical guidelines Q&A with confidence scoring
 
 **Key Concepts**:
-- Vector databases
-- Chunking strategies
-- Retrieval optimization
-- Re-ranking
-- Context management
+- The RAG pipeline: Retrieve → Augment → Generate
+- Vector databases (ChromaDB)
+- Chunking strategies and overlap
+- Multi-query retrieval and re-ranking
+- Source citations and evaluation
 
 **Time Investment**: 8-10 hours  
 **Output**: Production-ready RAG system for healthcare docs
@@ -63,24 +63,24 @@
 ---
 
 ### Level 3: AI Agents (Week 5-7)
-**Goal**: Build autonomous agents that can plan and execute tasks
+**Goal**: Build autonomous agents that think, plan, and act
 
 **Projects**:
-- `01_simple_agent/`: ReAct pattern agent
-- `02_langchain_agent/`: Using LangChain framework
-- `03_langgraph_agent/`: Stateful agents with LangGraph
-- `04_multi_agent/`: CrewAI multi-agent system
-- `05_healthcare_agent/`: Clinical decision support agent
+- `01_react_agent/`: Build the ReAct pattern from scratch — no frameworks, pure OpenAI
+- `02_langchain_agents/`: LangChain agents with custom tools, memory, error handling
+- `03_langgraph_workflows/`: LangGraph stateful agents — conditional routing, state management
+- `04_multi_agent/`: Multi-agent collaboration — pipeline, router, and debate patterns
+- `05_healthcare_agent/`: Capstone — clinical decision support with RAG + tools + safety guardrails
 
 **Key Concepts**:
-- ReAct (Reasoning + Acting)
-- Agent memory and state
-- Tool use and orchestration
-- Multi-agent collaboration
-- Guardrails and safety
+- ReAct pattern (Thought → Action → Observation loop)
+- Custom tool creation and agent memory
+- Graph-based workflow design (LangGraph)
+- Multi-agent orchestration patterns
+- Safety guardrails for healthcare AI
 
 **Time Investment**: 12-15 hours  
-**Output**: Intelligent healthcare assistant
+**Output**: Intelligent healthcare clinical decision support system
 
 ---
 
@@ -277,13 +277,13 @@ You'll have built:
 ## 🚦 Your Current Status
 
 Track your progress:
-- [ ] Level 1: Fundamentals
-- [ ] Level 2: RAG Systems
-- [ ] Level 3: AI Agents
+- [x] Level 1: Fundamentals ✅
+- [x] Level 2: RAG Systems ✅
+- [x] Level 3: AI Agents ✅
 - [ ] Level 4: Fine-Tuning
 - [ ] Level 5: Production
 
-**Next Step**: Set up environment and start with `level_1_fundamentals/`
+**Next Step**: Work through Level 2 (RAG) and Level 3 (Agents) projects
 
 ---
 

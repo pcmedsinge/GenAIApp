@@ -262,11 +262,11 @@ def main():
     
     # Example 2: Multi-turn conversation (NOW ACTIVE!)
     # Interactive chat with memory - has conversation context
-    # multi_turn_conversation(provider="openai")  # or "claude"
+    multi_turn_conversation(provider="openai")  # or "claude"
     
     # Example 3: Parameter comparison
     # Uncomment to see temperature effects
-    compare_parameters()
+    #compare_parameters()
     
     # Example 4: Cost tracking
     # Uncomment to see token usage

@@ -257,11 +257,11 @@ def main():
     print("\n🏥 Level 1.2: Embeddings & Semantic Search\n")
     
     # Example 1: Medical case search
-    medical_case_search()
+    #medical_case_search()
     
     # Example 2: Symptom clustering
     # Uncomment to run
-    # symptom_clustering()
+    symptom_clustering()
     
     # Example 3: Semantic vs keyword search
     # Uncomment to run
