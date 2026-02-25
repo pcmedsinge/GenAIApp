@@ -4,9 +4,9 @@ Use the LangChain framework to build agents with custom tools and memory.
 
 LangChain wraps the ReAct pattern (Project 01) with:
 - @tool decorator for easy tool creation
-- AgentExecutor for managing the agent loop
-- Memory for multi-turn conversations
-- Error handling and retries built-in
+- create_agent() for building agents (returns a LangGraph CompiledStateGraph)
+- Memory via message history
+- Streaming for step-by-step visibility
 
 Builds on: Project 01 (ReAct from scratch)
 """
@@ -18,10 +18,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 from langchain_openai import ChatOpenAI
-from langchain.agents import AgentExecutor, create_tool_calling_agent
-from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+from langchain.agents import create_agent
 from langchain_core.tools import tool
-from langchain_core.messages import HumanMessage, AIMessage
+from langchain_core.messages import HumanMessage, AIMessage, ToolMessage
 
 
 # ============================================================
@@ -161,20 +160,23 @@ def demo_agent_with_tools():
     print("DEMO 2: LangChain AGENT WITH TOOLS")
     print("=" * 70)
 
-    # Create agent prompt
-    prompt = ChatPromptTemplate.from_messages([
-        ("system", """You are a clinical decision support agent with access to medical tools.
+    print("""
+💡 LangChain 1.0 Agent Architecture:
+   - create_agent() builds a LangGraph-based agent
+   - Pass system_prompt as a string (no prompt templates needed!)
+   - agent.stream() shows step-by-step reasoning (like verbose=True)
+   - agent.invoke() returns final result directly
+""")
+
+    # Create the agent — one line replaces prompt template + agent + executor!
+    agent = create_agent(
+        llm,
+        tools=healthcare_tools,
+        system_prompt="""You are a clinical decision support agent with access to medical tools.
 Use your tools to look up specific medication info, interpret lab values,
 check drug interactions, and calculate BMI when needed.
-Always explain your clinical reasoning. For educational purposes only."""),
-        MessagesPlaceholder(variable_name="chat_history", optional=True),
-        ("human", "{input}"),
-        MessagesPlaceholder(variable_name="agent_scratchpad"),
-    ])
-
-    # Create the agent
-    agent = create_tool_calling_agent(llm, healthcare_tools, prompt)
-    agent_executor = AgentExecutor(agent=agent, tools=healthcare_tools, verbose=True)
+Always explain your clinical reasoning. For educational purposes only."""
+    )
 
     questions = [
         "What monitoring is needed for a patient starting lisinopril?",
@@ -185,8 +187,18 @@ Always explain your clinical reasoning. For educational purposes only."""),
     for q in questions:
         print(f"\n{'─' * 70}")
         print(f"❓ {q}\n")
-        result = agent_executor.invoke({"input": q})
-        print(f"\n📋 FINAL: {result['output']}")
+
+        # Use stream() to see each step (model thinking → tool calls → final answer)
+        for step in agent.stream({"messages": [{"role": "user", "content": q}]}):
+            for node_name, output in step.items():
+                for msg in output.get("messages", []):
+                    if hasattr(msg, 'tool_calls') and msg.tool_calls:
+                        for tc in msg.tool_calls:
+                            print(f"   🔧 Calling: {tc['name']}({tc['args']})")
+                    elif isinstance(msg, ToolMessage):
+                        print(f"   📎 Result: {msg.content[:150]}")
+                    elif isinstance(msg, AIMessage) and msg.content:
+                        print(f"\n📋 FINAL: {msg.content}")
 
 
 # ============================================================
@@ -203,22 +215,21 @@ def demo_agent_with_memory():
    Turn 1: "Check if potassium 5.4 is normal"
    Turn 2: "The patient is also on lisinopril — any concern?"
    Agent remembers the potassium result from Turn 1!
+
+   In LangChain 1.0, memory = just keep the message history and pass it back.
+   The agent sees ALL previous messages on every turn.
 """)
 
-    prompt = ChatPromptTemplate.from_messages([
-        ("system", """You are a clinical decision support agent with memory.
+    agent = create_agent(
+        llm,
+        tools=healthcare_tools,
+        system_prompt="""You are a clinical decision support agent with memory.
 You remember the full conversation history. Use your tools when needed.
-Reference previous findings in your answers. Educational purposes only."""),
-        MessagesPlaceholder(variable_name="chat_history"),
-        ("human", "{input}"),
-        MessagesPlaceholder(variable_name="agent_scratchpad"),
-    ])
+Reference previous findings in your answers. Educational purposes only."""
+    )
 
-    agent = create_tool_calling_agent(llm, healthcare_tools, prompt)
-    agent_executor = AgentExecutor(agent=agent, tools=healthcare_tools, verbose=True)
-
-    # Simulate multi-turn conversation
-    chat_history = []
+    # Simulate multi-turn conversation — messages accumulate naturally
+    messages = []
 
     conversation = [
         "Check the potassium level of 5.4 for a 70-year-old patient.",
@@ -231,22 +242,30 @@ Reference previous findings in your answers. Educational purposes only."""),
         print(f"Turn {turn}: \"{question}\"")
         print(f"{'═' * 70}")
 
-        result = agent_executor.invoke({
-            "input": question,
-            "chat_history": chat_history
-        })
+        # Add the new user message to the running history
+        messages.append({"role": "user", "content": question})
 
-        print(f"\n📋 Agent: {result['output']}")
+        # Invoke with full message history — this IS the memory
+        result = agent.invoke({"messages": messages})
 
-        # Add to history for next turn
-        chat_history.append(HumanMessage(content=question))
-        chat_history.append(AIMessage(content=result["output"]))
+        # Extract the final AI response
+        final_answer = result["messages"][-1].content
+        print(f"\n📋 Agent: {final_answer}")
+
+        # Update messages with everything the agent produced (tool calls, results, final answer)
+        # This gives the next turn full context of what happened
+        messages = result["messages"]
 
     print(f"""
 💡 MEMORY VALUE:
    • Turn 2 referenced Turn 1's potassium finding
    • Turn 3 built on both Turn 1 (potassium) and Turn 2 (lisinopril)
    • Without memory, each turn would be isolated — no continuity
+
+💡 HOW IT WORKS:
+   • messages list grows each turn (user + agent tool calls + agent reply)
+   • Next invoke() sees everything — full context carried forward
+   • No special "Memory" class — just pass the messages!
 """)
 
 
@@ -263,16 +282,12 @@ def demo_interactive():
     print("   Tools: medication lookup, lab interpretation, drug interactions, BMI")
     print("   Type 'quit' to exit\n")
 
-    prompt = ChatPromptTemplate.from_messages([
-        ("system", "You are a helpful clinical decision support agent. Use tools when needed. Educational purposes only."),
-        MessagesPlaceholder(variable_name="chat_history"),
-        ("human", "{input}"),
-        MessagesPlaceholder(variable_name="agent_scratchpad"),
-    ])
-
-    agent = create_tool_calling_agent(llm, healthcare_tools, prompt)
-    agent_executor = AgentExecutor(agent=agent, tools=healthcare_tools, verbose=False)
-    chat_history = []
+    agent = create_agent(
+        llm,
+        tools=healthcare_tools,
+        system_prompt="You are a helpful clinical decision support agent. Use tools when needed. Educational purposes only."
+    )
+    messages = []
 
     while True:
         question = input("You: ").strip()
@@ -281,14 +296,14 @@ def demo_interactive():
         if not question:
             continue
 
-        result = agent_executor.invoke({
-            "input": question,
-            "chat_history": chat_history
-        })
+        messages.append({"role": "user", "content": question})
+        result = agent.invoke({"messages": messages})
 
-        print(f"\nAgent: {result['output']}\n")
-        chat_history.append(HumanMessage(content=question))
-        chat_history.append(AIMessage(content=result["output"]))
+        final_answer = result["messages"][-1].content
+        print(f"\nAgent: {final_answer}\n")
+
+        # Keep full message history for memory
+        messages = result["messages"]
 
 
 # ============================================================
@@ -332,19 +347,20 @@ KEY TAKEAWAYS
    • Type hints = parameter schema
    • Same as OpenAI function definitions, but easier syntax
 
-🤖 LANGCHAIN AGENT:
-   • create_tool_calling_agent() — creates the agent logic
-   • AgentExecutor — manages the ReAct loop (same pattern as Project 01!)
-   • verbose=True shows the agent's reasoning process
+🤖 LANGCHAIN 1.0 AGENT:
+   • create_agent(llm, tools, system_prompt) — one call creates the full agent
+   • Returns a LangGraph CompiledStateGraph (same engine as Project 03!)
+   • agent.stream() shows step-by-step reasoning
+   • agent.invoke() returns final result
 
 💾 MEMORY:
-   • Pass chat_history to agent_executor.invoke()
-   • Agent references previous turns in reasoning
-   • Critical for clinical workflows (patient context carries forward)
+   • Just pass all previous messages in the 'messages' list
+   • Agent sees full conversation history on every turn
+   • No special Memory class needed — messages ARE the memory
 
 📊 LangChain vs FROM-SCRATCH:
-   From scratch (Project 01):  More control, less code for simple agents
-   LangChain (Project 02):     More features, better for complex agents
+   From scratch (Project 01):  More control, transparent reasoning loop
+   LangChain (Project 02):     One-line agent, built on LangGraph under the hood
 
 🎯 NEXT: Move to 03_langgraph_workflows for production-grade
    stateful agents with conditional routing!
