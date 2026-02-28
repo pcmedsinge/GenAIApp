@@ -1,9 +1,10 @@
 # GenAI Developer Learning Path
-## From Fundamentals to Advanced AI Applications
+## From Fundamentals to Production Healthcare AI
 
 **Target Audience**: Experienced developers new to GenAI/LLMs  
 **Prerequisites**: Python basics, understanding of AI/ML concepts  
-**Focus**: Hands-on building, not just "Hello World"
+**Focus**: Hands-on building, not just "Hello World"  
+**Levels**: 8 (Fundamentals → RAG → Agents → Safety → MCP → Multimodal → Fine-Tuning → Production)
 
 ---
 
@@ -13,12 +14,13 @@
 2. **Progressive Complexity**: Each level builds on the previous
 3. **Healthcare Context**: Examples relevant to healthcare IT
 4. **Production Ready**: Not just demos, but deployable code
+5. **Modern Stack**: MCP, reasoning models, multimodal — not just chat completions
 
 ---
 
 ## 📚 Learning Levels
 
-### Level 1: GenAI Fundamentals (Week 1-2)
+### Level 1: GenAI Fundamentals (Week 1-2) ✅
 **Goal**: Understand LLM APIs without frameworks
 
 **Projects**:
@@ -40,7 +42,7 @@
 
 ---
 
-### Level 2: RAG Systems (Week 3-4)
+### Level 2: RAG Systems (Week 3-4) ✅
 **Goal**: Build systems that augment LLMs with your own data
 
 **Projects**:
@@ -62,7 +64,7 @@
 
 ---
 
-### Level 3: AI Agents (Week 5-7)
+### Level 3: AI Agents (Week 5-7) ✅
 **Goal**: Build autonomous agents that think, plan, and act
 
 **Projects**:
@@ -84,47 +86,140 @@
 
 ---
 
-### Level 4: Fine-Tuning & Customization (Week 8-10)
-**Goal**: Customize models for specific tasks
+### Level 4: Evaluation, Safety & Guardrails (Week 8-9)
+**Goal**: Systematically evaluate, validate, and secure your AI systems
 
 **Projects**:
-- `01_prompt_tuning/`: Soft prompts and few-shot learning
-- `02_data_preparation/`: Create training datasets
-- `03_lora_finetuning/`: Efficient fine-tuning with LoRA
-- `04_evaluation/`: Model evaluation and benchmarking
-- `05_medical_icd_coding/`: Fine-tune for ICD-10 code prediction
+- `01_prompt_testing/`: Systematic prompt evaluation — A/B testing, regression suites, scoring rubrics
+- `02_rag_evaluation/`: RAG quality metrics — RAGAS (faithfulness, relevancy, context precision)
+- `03_output_validation/`: Structured outputs — JSON schema enforcement, Pydantic validation, retry logic
+- `04_guardrails/`: Safety layers — NeMo Guardrails, content filtering, hallucination detection
+- `05_healthcare_compliance/`: Capstone — HIPAA considerations, PHI de-identification, audit trails, clinical validation
 
 **Key Concepts**:
-- LoRA, QLoRA (efficient fine-tuning)
-- Training data preparation
-- Evaluation metrics
-- Overfitting prevention
-- Instruction tuning
+- RAGAS evaluation framework
+- Prompt regression testing
+- OpenAI structured outputs + Pydantic
+- NeMo Guardrails (NVIDIA)
+- HIPAA compliance for LLM usage
+- Hallucination detection and mitigation
 
-**Time Investment**: 15-20 hours  
-**Output**: Custom model for healthcare coding
+**Time Investment**: 10-12 hours  
+**Output**: Evaluated, guarded, and compliant healthcare AI system
 
 ---
 
-### Level 5: Production & Advanced Topics (Week 11+)
-**Goal**: Deploy and scale GenAI applications
+### Level 5: Model Context Protocol — MCP (Week 10-11)
+**Goal**: Master the universal standard for connecting AI to tools and data
 
 **Projects**:
-- `01_api_design/`: FastAPI wrapper for LLM services
-- `02_caching/`: Response caching strategies
-- `03_monitoring/`: LLM observability with LangSmith/Helicone
-- `04_security/`: Prompt injection prevention
-- `05_multi_modal/`: Vision + text models
+- `01_mcp_fundamentals/`: Protocol architecture — hosts, clients, servers, transport (stdio/SSE)
+- `02_mcp_tool_servers/`: Build MCP servers — expose Python functions as tools via `mcp` SDK
+- `03_mcp_resources/`: Data exposure — static/dynamic resources, templates, subscriptions
+- `04_mcp_with_agents/`: Integration — connect MCP servers to LangChain/LangGraph agents
+- `05_healthcare_mcp/`: Capstone — healthcare MCP ecosystem (EHR, labs, medications, scheduling)
 
-**Real Healthcare Applications**:
-- Clinical note summarization
-- Prior authorization automation
-- Patient triage assistant
-- Medical literature Q&A
-- Claims processing assistant
+**Key Concepts**:
+- MCP protocol (Anthropic's standard, adopted industry-wide)
+- Transport: stdio for local, SSE/HTTP for remote
+- Tool servers vs resource servers
+- Dynamic tool discovery
+- Multi-server orchestration
 
-**Time Investment**: 20+ hours  
-**Output**: Deployable healthcare AI applications
+**Time Investment**: 12-15 hours  
+**Output**: Healthcare MCP server ecosystem powering clinical agents
+
+**Why MCP matters**: MCP is the "USB-C of AI" — instead of writing custom function-calling integrations for every tool, MCP provides a universal protocol. One agent can connect to any MCP-compatible server. This is the architecture pattern for 2025+ agentic AI.
+
+---
+
+### Level 6: Multimodal & Reasoning Models (Week 14-15)
+**Goal**: Go beyond text — vision, audio, structured output, and extended reasoning
+
+**Projects**:
+- `01_vision_models/`: Image understanding — GPT-4o vision, Claude vision, document extraction
+- `02_audio_transcription/`: Speech-to-text — Whisper, medical terminology, speaker diarization
+- `03_structured_outputs/`: Schema-enforced generation — JSON schema, nested Pydantic, FHIR data
+- `04_reasoning_models/`: Extended thinking — o1/o3, DeepSeek R1, when reasoning vs standard
+- `05_medical_multimodal/`: Capstone — multimodal triage (image + audio + reasoning → clinical note)
+
+**Key Concepts**:
+- Vision APIs for image analysis
+- Whisper for medical transcription
+- Structured output with JSON schema enforcement
+- Reasoning models (o1, o3, DeepSeek R1) vs standard models
+- Cost/latency tradeoffs for model selection
+
+**Time Investment**: 12-15 hours  
+**Output**: Multimodal clinical assistant that sees, hears, and reasons
+
+---
+
+### Level 7: Fine-Tuning & Open-Source Models (Week 16-18)
+**Goal**: Customize models for your domain and run locally for HIPAA compliance
+
+**Projects**:
+- `01_local_llms/`: Ollama — install, run, and serve Llama/Mistral locally with OpenAI-compatible API
+- `02_huggingface_ecosystem/`: Transformers, model hub, tokenizers, inference pipelines
+- `03_data_preparation/`: Training datasets — instruction format, quality filtering, synthetic data generation
+- `04_lora_finetuning/`: Efficient fine-tuning — LoRA/QLoRA with PEFT + Accelerate
+- `05_medical_model/`: Capstone — fine-tuned ICD-10 coder, evaluated and deployed locally via Ollama
+
+**Key Concepts**:
+- Ollama for local model deployment
+- GGUF format and quantization (Q4, Q8)
+- HuggingFace transformers ecosystem
+- LoRA/QLoRA parameter-efficient fine-tuning
+- Training data preparation and quality
+- Model evaluation (accuracy, F1, confusion matrix)
+
+**Time Investment**: 15-20 hours  
+**Output**: Custom fine-tuned model running locally — HIPAA-compliant
+
+---
+
+### Level 8: Production & Deployment (Week 19-22)
+**Goal**: Ship production-grade healthcare AI applications
+
+**Projects**:
+- `01_api_design/`: FastAPI — async endpoints, Pydantic schemas, rate limiting, auth
+- `02_caching_optimization/`: Semantic caching, prompt caching (Anthropic/OpenAI), model routing
+- `03_monitoring_observability/`: LangSmith/LangFuse tracing, cost dashboards, alerting
+- `04_security_scaling/`: Prompt injection defense, input sanitization, load balancing
+- `05_healthcare_platform/`: Capstone — complete healthcare AI platform (RAG + agents + MCP + guardrails + monitoring)
+
+**Key Concepts**:
+- FastAPI async patterns
+- Semantic caching and prompt caching
+- LLM observability (LangSmith, LangFuse)
+- Prompt injection attacks and defenses
+- Horizontal scaling and load balancing
+- End-to-end platform architecture
+
+**Time Investment**: 15-20 hours  
+**Output**: Production-deployed healthcare AI platform — the final capstone
+
+---
+
+## 🗺️ Level Dependency Map
+
+```
+Level 1: Fundamentals
+    ↓
+Level 2: RAG ──────────────────────────────────────────┐
+    ↓                                                   │
+Level 3: Agents ───────────────────────────────┐        │
+    ↓                                          │        │
+Level 4: Evaluation & Safety                   │        │
+    ↓                                          │        │
+Level 5: MCP ← (uses agents from L3)──────────┘        │
+    ↓                                                   │
+Level 6: Multimodal & Reasoning                         │
+    ↓                                                   │
+Level 7: Fine-Tuning & Open Models                      │
+    ↓                                                   │
+Level 8: Production ← (combines everything)─────────────┘
+```
 
 ---
 
@@ -132,38 +227,57 @@
 
 ### Core Libraries
 ```
-openai>=1.0.0              # OpenAI API
+openai>=1.0.0              # OpenAI API (GPT-4o, o1, Whisper, embeddings)
 anthropic>=0.18.0          # Claude API
-langchain>=0.1.0           # LLM framework
+langchain>=0.3.0           # LLM framework
 langchain-community        # Community integrations
-langgraph>=0.0.20          # Stateful agents
-crewai>=0.1.0              # Multi-agent framework
+langgraph>=0.2.0           # Stateful agent workflows
 ```
 
-### Vector Databases
+### Agentic Infrastructure (Level 5)
+```
+mcp                        # Model Context Protocol SDK
+httpx                      # Async HTTP for MCP transports
+```
+
+### Vector Databases (Level 2)
 ```
 chromadb                   # Local vector DB
 faiss-cpu                  # Facebook AI similarity search
-pinecone-client           # Cloud vector DB (optional)
 ```
 
-### Fine-tuning & Training
+### Evaluation & Safety (Level 4)
 ```
-datasets                   # Hugging Face datasets
-transformers              # Model loading
-peft                      # Parameter-efficient fine-tuning
-bitsandbytes             # Quantization
-accelerate               # Training acceleration
+ragas                      # RAG evaluation framework
+nemoguardrails             # NVIDIA guardrails framework
+pydantic>=2.0              # Output validation
+```
+
+### Fine-tuning & Open Models (Level 7)
+```
+ollama                     # Local model runtime
+transformers               # HuggingFace model loading
+datasets                   # HuggingFace datasets
+peft                       # Parameter-efficient fine-tuning (LoRA)
+bitsandbytes               # Quantization
+accelerate                 # Training acceleration
+```
+
+### Production & Deployment (Level 8)
+```
+fastapi                    # Async API framework
+uvicorn                    # ASGI server
+redis                      # Caching layer
+langsmith                  # LLM observability
+streamlit                  # Quick UIs / dashboards
 ```
 
 ### Supporting Tools
 ```
-python-dotenv            # Environment management
-tiktoken                 # Token counting
-numpy                    # Numerical computing
-pandas                   # Data manipulation
-fastapi                  # API framework
-streamlit                # Quick UIs
+python-dotenv              # Environment management
+tiktoken                   # Token counting
+numpy                      # Numerical computing
+pandas                     # Data manipulation
 ```
 
 ---
@@ -223,11 +337,28 @@ python main.py
 
 3. **Before Level 3**: 
    - ReAct paper
-   - LangChain documentation
+   - LangChain / LangGraph documentation
 
 4. **Before Level 4**: 
+   - RAGAS documentation
+   - OpenAI structured outputs guide
+
+5. **Before Level 5**: 
+   - MCP specification (modelcontextprotocol.io)
+   - MCP Python SDK documentation
+
+6. **Before Level 6**: 
+   - OpenAI vision and audio API docs
+   - OpenAI reasoning model guide (o1/o3)
+
+7. **Before Level 7**: 
+   - Ollama documentation
    - LoRA paper (don't worry if it's dense)
-   - Fine-tuning best practices
+   - HuggingFace PEFT documentation
+
+8. **Before Level 8**: 
+   - FastAPI documentation
+   - LangSmith/LangFuse getting started
 
 ---
 
@@ -238,39 +369,47 @@ After completing this path, you should be able to:
 - ✅ Build conversational AI applications
 - ✅ Create RAG systems for domain-specific knowledge
 - ✅ Develop autonomous agents that use tools
+- ✅ Evaluate and secure AI systems for healthcare
+- ✅ Build and connect MCP servers for tool ecosystems
+- ✅ Work with vision, audio, and reasoning models
 - ✅ Fine-tune models for specialized tasks
+- ✅ Run models locally for HIPAA compliance
 - ✅ Deploy production-ready GenAI applications
-- ✅ Understand cost/performance tradeoffs
-- ✅ Implement safety and validation measures
+- ✅ Understand cost/performance/safety tradeoffs
 
 ---
 
 ## 🏥 Healthcare-Specific Outcomes
 
 You'll have built:
-1. Medical literature Q&A system
-2. Clinical decision support agent
-3. ICD-10 coding assistant
-4. Prior authorization helper
-5. Clinical note summarization tool
+1. Medical literature Q&A system (RAG)
+2. Clinical decision support agent (Agents)
+3. Evaluated and guarded clinical AI (Safety)
+4. MCP-powered healthcare tool ecosystem (MCP)
+5. Multimodal clinical triage assistant (Multimodal)
+6. ICD-10 coding model running locally (Fine-tuning)
+7. Complete healthcare AI platform (Production)
 
 ---
 
 ## 🤝 Community & Resources
 
-- **Discord/Slack**: Join GenAI communities
-- **GitHub**: Follow LangChain, llamaindex repositories
-- **Papers**: ArXiv for latest research
-- **Blogs**: Anthropic, OpenAI engineering blogs
+- **MCP**: modelcontextprotocol.io — specification, servers, SDKs
+- **LangChain**: python.langchain.com — framework docs
+- **HuggingFace**: huggingface.co — models, datasets, papers
+- **ArXiv**: arxiv.org — latest AI research papers
+- **Ollama**: ollama.com — local model runtime
+- **OpenAI**: platform.openai.com — API documentation
+- **Anthropic**: docs.anthropic.com — Claude API + MCP
 
 ---
 
 ## 📝 Notes
 
-- **Cost**: Expect ~$20-50 in API costs for full learning path
-- **Time**: 60-80 hours total (can spread over 2-3 months)
-- **Hardware**: Most projects run on CPU, fine-tuning benefits from GPU
-- **Updates**: GenAI moves fast - check for library updates
+- **Cost**: Expect ~$45-70 in API costs for the full learning path (local models are free)
+- **Time**: ~90-115 hours total (can spread over 4-6 months)
+- **Hardware**: Levels 1-6 run on CPU. Level 7 fine-tuning benefits from GPU. Ollama needs 8GB+ RAM
+- **Updates**: GenAI moves fast — check for library updates regularly
 
 ---
 
@@ -280,10 +419,13 @@ Track your progress:
 - [x] Level 1: Fundamentals ✅
 - [x] Level 2: RAG Systems ✅
 - [x] Level 3: AI Agents ✅
-- [ ] Level 4: Fine-Tuning
-- [ ] Level 5: Production
+- [ ] Level 4: Evaluation, Safety & Guardrails
+- [ ] Level 5: Model Context Protocol (MCP)
+- [ ] Level 6: Multimodal & Reasoning Models
+- [ ] Level 7: Fine-Tuning & Open-Source Models
+- [ ] Level 8: Production & Deployment
 
-**Next Step**: Work through Level 2 (RAG) and Level 3 (Agents) projects
+**Next Step**: Level 4 — Evaluate and secure everything you've built
 
 ---
 
