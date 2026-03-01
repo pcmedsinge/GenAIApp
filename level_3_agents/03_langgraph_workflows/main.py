@@ -41,7 +41,7 @@ class SimpleState(TypedDict):
 def assess_node(state: SimpleState) -> dict:
     """Node 1: LLM assesses the patient complaint"""
     response = llm.invoke(
-        f"You are a triage nurse. Briefly assess this patient complaint in 2-3 sentences: {state['patient_complaint']}"
+        f"You are a triage nurse. Briefly assess this patient  complaint in 2-3 sentences: {state['patient_complaint']}"
     )
     return {"assessment": response.content}
 

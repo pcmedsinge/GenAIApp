@@ -62,6 +62,13 @@ These are natural fits for agents.
 - Complete healthcare workflow automation
 - **Healthcare Example**: End-to-end clinical decision support system
 
+### 06_agent_architectures — Agent Architecture Deep Dive
+- Compare ALL major agent architectures side-by-side
+- Plan-and-Execute, Reflection/Self-Critique, Parallel Fan-Out, Hierarchical
+- Decision framework: when to use which architecture
+- Each architecture as a standalone exercise with demos
+- **Healthcare Example**: Clinical case management across all architectures
+
 ## Learning Objectives
 
 After completing Level 3, you will:
@@ -71,9 +78,10 @@ After completing Level 3, you will:
 - ✅ Orchestrate multi-agent systems
 - ✅ Implement safety guardrails for healthcare agents
 - ✅ Combine RAG + Agents for knowledge-grounded autonomous systems
+- ✅ Choose the right agent architecture for any problem (Plan-Execute, Reflection, Fan-Out, Hierarchical)
 
 ## Time Estimate
-12-15 hours total (2-3 hours per project)
+16-20 hours total (2-3 hours per project, 4-5 hours for agent architectures)
 
 ## Key Concept: The ReAct Pattern
 
