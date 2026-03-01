@@ -4,7 +4,7 @@
 
 You've already built agents using ReAct (Project 01), LangChain (02), LangGraph (03), and Multi-Agent patterns (04). But **how do you choose the RIGHT architecture for a given problem?**
 
-This module teaches the **7 major agent architectures** side-by-side, with the same healthcare scenario in each — so you can see exactly how the architecture shapes the solution.
+This module teaches the **10 major agent architectures and patterns** side-by-side, with the same healthcare scenario in each — so you can see exactly how the architecture shapes the solution.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -28,6 +28,12 @@ This module teaches the **7 major agent architectures** side-by-side, with the s
 │                        ▼                                     │
 │              7. Tool-Making Agent                            │
 │              (Creates its own tools)                         │
+│                                                              │
+│  Resilience & Production Patterns:                           │
+│  8. Retry & Error     9. Peer-to-    10. DAG Dependency     │
+│     Recovery             Peer           Workflows            │
+│  (Backoff, circuit    (Blackboard,   (Topological sort,     │
+│   breaker, fallback)   negotiate)     conditional edges)    │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -48,6 +54,9 @@ This module teaches the **7 major agent architectures** side-by-side, with the s
 | **Hierarchical Agents** | Complex tasks requiring delegation to sub-agents | Exercise 4 |
 | **Router/Supervisor** | Multiple specialists, need to pick the right one | (Covered in Project 04) |
 | **Tool-Making Agent** | Agent needs capabilities that don't exist yet | `main.py` Demo 4 |
+| **Retry & Error Recovery** | Production resilience: backoff, circuit breaker, fallback | Exercise 5 |
+| **Peer-to-Peer Collaboration** | Agents negotiate as equals through shared blackboard | Exercise 6 |
+| **DAG Dependency Workflows** | Graph-based orchestration with parallel + conditional edges | Exercise 7 |
 
 ## The Key Decision Framework
 
@@ -84,6 +93,9 @@ Q: "Does the agent need new capabilities dynamically?"
 | Parallel Fan-Out | Fast, comprehensive | Hard to merge conflicting results | High | Low* |
 | Hierarchical | Handles complexity | Hard to debug, expensive | Very High | High |
 | Tool-Making | Ultra-flexible | Risky (executing generated code) | Medium | Medium |
+| Retry/Error Recovery | Production-ready, fault tolerant | Adds complexity | Low (overhead) | Variable |
+| Peer-to-Peer | Rich consensus, surfaces disagreements | Slow, expensive (many rounds) | Very High | Very High |
+| DAG Dependency | Optimal parallelism, conditional paths | Upfront graph design needed | Medium | Low* |
 
 *Low latency because parallel execution
 
@@ -96,10 +108,13 @@ Q: "Does the agent need new capabilities dynamically?"
 ├── exercise_1_plan_and_execute.py      ← Plan upfront, then execute step-by-step
 ├── exercise_2_reflection.py            ← Generate → Critique → Revise loop
 ├── exercise_3_parallel_fanout.py       ← Fan-out to specialists, reduce to consensus
-└── exercise_4_hierarchical.py          ← Supervisor delegates to sub-agents
+├── exercise_4_hierarchical.py          ← Supervisor delegates to sub-agents
+├── exercise_5_retry_error_recovery.py  ← Retry, circuit breaker, fallback chain
+├── exercise_6_peer_to_peer.py          ← Blackboard-based agent negotiation
+└── exercise_7_dag_dependency.py        ← DAG workflows with topological execution
 ```
 
-## Estimated Time: 4–5 hours
+## Estimated Time: 7–9 hours
 
 | Part | Time | What You'll Do |
 |------|------|----------------|
@@ -108,6 +123,9 @@ Q: "Does the agent need new capabilities dynamically?"
 | Exercise 2 | 60 min | Build a Reflection agent for clinical note generation |
 | Exercise 3 | 60 min | Build a Parallel Fan-Out system for second opinions |
 | Exercise 4 | 60 min | Build a Hierarchical agent for complex case management |
+| Exercise 5 | 45 min | Build resilient agents with retry, circuit breaker, fallback |
+| Exercise 6 | 60 min | Build peer-to-peer agents with blackboard communication |
+| Exercise 7 | 60 min | Build DAG workflows with topological execution |
 
 ## How to Run
 
@@ -120,6 +138,9 @@ python level_3_agents/06_agent_architectures/exercise_1_plan_and_execute.py
 python level_3_agents/06_agent_architectures/exercise_2_reflection.py
 python level_3_agents/06_agent_architectures/exercise_3_parallel_fanout.py
 python level_3_agents/06_agent_architectures/exercise_4_hierarchical.py
+python level_3_agents/06_agent_architectures/exercise_5_retry_error_recovery.py
+python level_3_agents/06_agent_architectures/exercise_6_peer_to_peer.py
+python level_3_agents/06_agent_architectures/exercise_7_dag_dependency.py
 ```
 
 ## Key Takeaway
