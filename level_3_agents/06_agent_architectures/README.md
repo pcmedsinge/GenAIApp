@@ -4,7 +4,7 @@
 
 You've already built agents using ReAct (Project 01), LangChain (02), LangGraph (03), and Multi-Agent patterns (04). But **how do you choose the RIGHT architecture for a given problem?**
 
-This module teaches the **10 major agent architectures and patterns** side-by-side, with the same healthcare scenario in each — so you can see exactly how the architecture shapes the solution.
+This module teaches the **13 major agent architectures and patterns** side-by-side, with the same healthcare scenario in each — so you can see exactly how the architecture shapes the solution.
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
@@ -34,6 +34,12 @@ This module teaches the **10 major agent architectures and patterns** side-by-si
 │     Recovery             Peer           Workflows            │
 │  (Backoff, circuit    (Blackboard,   (Topological sort,     │
 │   breaker, fallback)   negotiate)     conditional edges)    │
+│                                                              │
+│  Orchestration & Coordination Patterns:                      │
+│  11. Orchestration   12. Saga        13. Event-Driven       │
+│      vs Choreography    Pattern         Pub/Sub             │
+│  (Central control    (Multi-step     (Agents subscribe      │
+│   vs distributed)     rollback)       to event topics)      │
 └─────────────────────────────────────────────────────────────┘
 ```
 
@@ -57,6 +63,9 @@ This module teaches the **10 major agent architectures and patterns** side-by-si
 | **Retry & Error Recovery** | Production resilience: backoff, circuit breaker, fallback | Exercise 5 |
 | **Peer-to-Peer Collaboration** | Agents negotiate as equals through shared blackboard | Exercise 6 |
 | **DAG Dependency Workflows** | Graph-based orchestration with parallel + conditional edges | Exercise 7 |
+| **Orchestration vs Choreography** | Understanding the two fundamental coordination patterns | Exercise 8 |
+| **Saga Pattern** | Long-running transactions with compensating rollback actions | Exercise 9 |
+| **Event-Driven / Pub-Sub** | Reactive agents subscribing to event topics independently | Exercise 10 |
 
 ## The Key Decision Framework
 
@@ -96,6 +105,10 @@ Q: "Does the agent need new capabilities dynamically?"
 | Retry/Error Recovery | Production-ready, fault tolerant | Adds complexity | Low (overhead) | Variable |
 | Peer-to-Peer | Rich consensus, surfaces disagreements | Slow, expensive (many rounds) | Very High | Very High |
 | DAG Dependency | Optimal parallelism, conditional paths | Upfront graph design needed | Medium | Low* |
+| Orchestration | Easy to understand, debug, audit | Single point of failure, tight coupling | Medium | Medium |
+| Choreography | Loose coupling, scalable, resilient | Hard to debug, hard to trace flow | Medium | Variable |
+| Saga | Reliable multi-step transactions, auto-rollback | Compensation design complexity | Medium | High |
+| Event-Driven Pub/Sub | Ultimate loose coupling, easy to extend | Hard to debug cascades | Variable | Variable |
 
 *Low latency because parallel execution
 
@@ -111,10 +124,13 @@ Q: "Does the agent need new capabilities dynamically?"
 ├── exercise_4_hierarchical.py          ← Supervisor delegates to sub-agents
 ├── exercise_5_retry_error_recovery.py  ← Retry, circuit breaker, fallback chain
 ├── exercise_6_peer_to_peer.py          ← Blackboard-based agent negotiation
-└── exercise_7_dag_dependency.py        ← DAG workflows with topological execution
+├── exercise_7_dag_dependency.py        ← DAG workflows with topological execution
+├── exercise_8_orchestration_patterns.py ← Orchestration vs choreography comparison
+├── exercise_9_saga_pattern.py          ← Multi-step transactions with rollback
+└── exercise_10_event_driven.py         ← Event-driven Pub/Sub agent system
 ```
 
-## Estimated Time: 7–9 hours
+## Estimated Time: 10–12 hours
 
 | Part | Time | What You'll Do |
 |------|------|----------------|
@@ -126,6 +142,9 @@ Q: "Does the agent need new capabilities dynamically?"
 | Exercise 5 | 45 min | Build resilient agents with retry, circuit breaker, fallback |
 | Exercise 6 | 60 min | Build peer-to-peer agents with blackboard communication |
 | Exercise 7 | 60 min | Build DAG workflows with topological execution |
+| Exercise 8 | 45 min | Compare orchestration vs choreography patterns |
+| Exercise 9 | 45 min | Build saga pattern with compensating rollbacks |
+| Exercise 10 | 45 min | Build event-driven Pub/Sub agent monitoring system |
 
 ## How to Run
 
@@ -141,6 +160,9 @@ python level_3_agents/06_agent_architectures/exercise_4_hierarchical.py
 python level_3_agents/06_agent_architectures/exercise_5_retry_error_recovery.py
 python level_3_agents/06_agent_architectures/exercise_6_peer_to_peer.py
 python level_3_agents/06_agent_architectures/exercise_7_dag_dependency.py
+python level_3_agents/06_agent_architectures/exercise_8_orchestration_patterns.py
+python level_3_agents/06_agent_architectures/exercise_9_saga_pattern.py
+python level_3_agents/06_agent_architectures/exercise_10_event_driven.py
 ```
 
 ## Key Takeaway
