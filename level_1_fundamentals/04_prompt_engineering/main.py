@@ -8,6 +8,7 @@ Healthcare Use Case: Clinical note structuring, ICD-10 coding, diagnosis reasoni
 
 import os
 import json
+import importlib.util
 from openai import OpenAI
 from dotenv import load_dotenv
 
@@ -475,6 +476,42 @@ def demo_pitfalls():
 
 
 # ============================================
+# TECHNIQUE 7: Jinja2 Prompt Registry + Versioning
+# ============================================
+
+def demo_jinja2_prompt_registry():
+    """
+    Launch Exercise 5 from the Project 4 main menu.
+    """
+    print("\n" + "="*70)
+    print("TECHNIQUE 7: JINJA2 PROMPT REGISTRY + VERSIONING")
+    print("="*70)
+    print("→ Launching Exercise 5 module (Jinja2 templates + registry + rollback).\n")
+
+    exercise_path = os.path.join(
+        os.path.dirname(__file__),
+        "exercise_5_jinja2_prompt_registry.py",
+    )
+
+    if not os.path.exists(exercise_path):
+        print("❌ exercise_5_jinja2_prompt_registry.py not found")
+        return
+
+    spec = importlib.util.spec_from_file_location("exercise_5_jinja2_prompt_registry", exercise_path)
+    if spec is None or spec.loader is None:
+        print("❌ Could not load Exercise 5 module")
+        return
+
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+
+    if hasattr(module, "main"):
+        module.main()
+    else:
+        print("❌ Exercise 5 module loaded but no main() found")
+
+
+# ============================================
 # Main Menu
 # ============================================
 
@@ -490,9 +527,10 @@ def main():
     print("4. Output Formatting (JSON, SOAP, structured)")
     print("5. Prompt Templates (reusable prompts)")
     print("6. Common Pitfalls & Fixes")
-    print("7. Run ALL demos")
+    print("7. Jinja2 Prompt Registry + Versioning")
+    print("8. Run ALL demos")
 
-    choice = input("\nEnter choice (1-7): ").strip()
+    choice = input("\nEnter choice (1-8): ").strip()
 
     demos = {
         "1": demo_zero_shot,
@@ -501,9 +539,10 @@ def main():
         "4": demo_output_formatting,
         "5": demo_prompt_templates,
         "6": demo_pitfalls,
+        "7": demo_jinja2_prompt_registry,
     }
 
-    if choice == "7":
+    if choice == "8":
         for demo in demos.values():
             demo()
     elif choice in demos:

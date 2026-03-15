@@ -59,6 +59,10 @@ Use CoT prompting for step-by-step differential diagnosis reasoning.
 ### Exercise 4: Prompt Template Library
 Build a library of reusable healthcare prompt templates with variable substitution.
 
+### Exercise 5: Jinja2 Prompt Registry + Versioning
+Build a versioned prompt registry with Jinja2 rendering, active-version promotion,
+and rollback to prior prompt versions.
+
 ## Healthcare Applications
 - Clinical documentation structuring
 - Medical coding assistance
@@ -67,4 +71,5 @@ Build a library of reusable healthcare prompt templates with variable substituti
 - Discharge summary generation
 
 ## Next Steps
-After mastering prompt engineering, move to **05_streaming** to learn real-time response streaming!
+After mastering prompt engineering (including template versioning), move to
+**05_streaming** to learn real-time response streaming!

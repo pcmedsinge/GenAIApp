@@ -38,6 +38,7 @@ python-dotenv>=1.0.1
 tiktoken>=0.6.0
 tenacity>=8.2.3  # Retry logic
 pydantic>=2.6.1  # Data validation
+jinja2>=3.1.4
 
 # Data Processing
 numpy>=1.26.3
